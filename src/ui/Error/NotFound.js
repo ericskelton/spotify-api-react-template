@@ -1,6 +1,9 @@
 import react from "react";
 import CenteredCard from "../General/CenteredCard";
 
+import {Typography} from '@material-ui/core'
+import Game from 'react-dinosaur-game'
+
 export default function NotFound() {
     return (
         <CenteredCard>

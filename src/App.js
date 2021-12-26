@@ -4,6 +4,7 @@ import "./App.css";
 import Toolbar from "./ui/ToolBar";
 import { AuthContext } from "./contexts/AuthContext";
 import PageRoutes from "./routes/PageRoutes";
+import Layout from './ui/Layout'
 import { CookiesProvider } from "react-cookie";
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
     return (
         <CookiesProvider>
             <AuthContext.Provider value={[auth, setAuth]}>
-                <PageRoutes />
+                <Layout />
             </AuthContext.Provider>
         </CookiesProvider>
     );

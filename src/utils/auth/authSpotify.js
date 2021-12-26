@@ -74,8 +74,8 @@ export const loginAuthorizationCodeFlow = (scope) => {
     window.location.href =
         "https://accounts.spotify.com/authorize?" + params.toString();
 };
-// not implemented yet
-export const callbackAuthorizationCodeFlow = async () => {
+
+export const callbackAuthorizationCodeFlow =  () => {
     const hash = window.location.hash
         .substring(1)
         .split("&")
@@ -87,7 +87,7 @@ export const callbackAuthorizationCodeFlow = async () => {
             return initial;
         }, {});
 
-    const response = await axios.post(
+    return axios.post(
         "https://accounts.spotify.com/api/token",
         {
             code: hash.code,
@@ -107,11 +107,14 @@ export const callbackAuthorizationCodeFlow = async () => {
             },
             json: true,
         }
-    );
-    
-    return {
-        token: response.access_token,
-        expiresIn: response.expires_in,
-        refreshToken: response.refresh_token,
+    ).then(res =>{
+        const data = res.data
+        return {
+        token: data.access_token,
+        expiresIn: data.expires_in,
+        refreshToken: data.refresh_token,
     };
+    });
+    
+    
 };

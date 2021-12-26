@@ -1,6 +1,6 @@
 import react from "react";
 import { Card, CardContent, Paper, Typography } from "@material-ui/core";
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from '@mui/styles'
 
 const useStyles = makeStyles({
     flexContainer: {

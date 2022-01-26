@@ -1,5 +1,5 @@
 import React from 'react'
-import Loader from 'react-loader-spinner';
+import {ThreeDots} from 'react-loader-spinner';
 
 const LoadingIndicator = props => {
   
@@ -13,7 +13,7 @@ const LoadingIndicator = props => {
         alignItems: "center"
       }}
     >
-        <Loader type="ThreeDots" color="#2BAD60" height="100" width="100" />
+        <ThreeDots type="ThreeDots" color="#2BAD60" height="100" width="100" />
     </div>)
   };
 

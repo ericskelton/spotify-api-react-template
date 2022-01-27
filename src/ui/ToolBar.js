@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,7 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { AuthContext } from '../contexts/AuthContext';
 import { loginImplicitGrantFlow, loginAuthorizationCodeFlow} from '../utils/auth/authSpotify'
-
+import spotifyGet from '../utils/auth/spotifyGet'
 const pages = [];
 
 
@@ -23,8 +23,8 @@ const Layout = (props) => {
     const login = () => loginAuthorizationCodeFlow(['user-modify-playback-state user-read-currently-playing user-read-playback-state user-read-private user-read-email'])
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-    const auth = React.useContext(AuthContext);
-
+    const [auth, setAuth] = useContext(AuthContext);
+    const [profile, setProfile] = useState()
     const settings_logged_in = [{ name: "Logout", function: logout }];
     const settings_logged_out = [{ name: "Login with Spotify", function: login}];
     const settings = auth.loggedIn ? settings_logged_in : settings_logged_out;
@@ -42,6 +42,15 @@ const Layout = (props) => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    useEffect(() => {
+        if(auth.token){
+            spotifyGet('/me', auth.token).then(res=>{
+                setProfile(res)
+            })
+        }
+        
+    }, [auth])
 
     return (
         <><AppBar position="static">
@@ -132,14 +141,14 @@ const Layout = (props) => {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            {auth.loggedIn ? 
+                            {profile ? 
                                 <IconButton
                                     onClick={handleOpenUserMenu}
                                     sx={{ p: 0 }}
                                 >
                                 <Avatar
-                                    alt={auth.name}
-                                    src={auth.photo}
+                                    alt={profile.name}
+                                    src={profile.images[0].url}
                                 />
                             </IconButton> : <IconButton
                                     onClick={handleOpenUserMenu}

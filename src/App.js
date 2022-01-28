@@ -6,6 +6,8 @@ import { AuthContext } from "./contexts/AuthContext";
 import PageRoutes from "./routes/PageRoutes";
 import Layout from './ui/Layout'
 import { CookiesProvider } from "react-cookie";
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
+import Theme from './ui/Themes/Theme.ts'
 
 function App() {
     const [auth, setAuth] = useState({
@@ -32,7 +34,9 @@ function App() {
     return (
         <CookiesProvider>
             <AuthContext.Provider value={[auth, setAuth]}>
-                <Layout />
+                <ThemeProvider theme={Theme}>
+                    <Layout />
+                </ThemeProvider>
             </AuthContext.Provider>
         </CookiesProvider>
     );
